@@ -1,0 +1,14 @@
+*{
+  color: white;
+}
+
+.fondo {
+  background-image: url(../image/fondo-hd.jpg);
+	background-size: auto;
+	background-repeat: no-repeat;
+}
+
+.dojologo{
+  height: 380px;
+  width: 500px;
+}

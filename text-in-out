@@ -1,0 +1,14 @@
+<div class="w-message w-message-in">
+  <div class="w-message-text">
+    <h5 class="green-1">Maria Paula Rivarola</h5>
+    <p>Jajaja Sii finalmente se corto!!</p>
+    <div class="time">11:13</div>
+  </div>
+</div>
+
+<div class="w-message w-message-out">
+  <div class="w-message-text">
+    <p>Antes parecia mufasa jajajaja</p>
+    <div class="time">11:14</div>
+  </div>
+</div>
