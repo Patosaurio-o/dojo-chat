@@ -23,10 +23,5 @@ console.log(`el server esta usando el puerto: ${server.address().port}!`)
 
 const io = require('socket.io')(server);
 
-io.on('connection', function(socket) {
-  
-  socket.on('msg', function(data) {
-    socket.broadcast.emit('msg', {msg: msg});
-  });
-
-});
+module.exports.io = io;
+require('./routes/sockets')

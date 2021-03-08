@@ -11,9 +11,9 @@
 			<link href="/css/bootstrap.min.css" rel="stylesheet">
 			<Script src="/js/bootstrap.bundle.min.js"></SCript>
 	  	<link href="/css/icomoon.css" rel="stylesheet">
-	  	<link href="/css/font-awesome.min.css" rel="stylesheet">
 	  	<link href="/css/main.css" rel="stylesheet">
 	  	<link href="/css/queries.css" rel="stylesheet">
+			<script src="/js/moment-whit-locales.min.js"></script>
 	</head>
 	<body>
 		<div class="w-app">
@@ -21,10 +21,11 @@
 				<section class="col w-contacts w-messages">
 					<header class="w-chat-messages clearfix">
 						<div class="avatar col-9 w-chat-profile">
-							<img src="image/logocodeacademy.png" alt="">
+							<img src="/image/download.png" alt="">
 							<h4 class="w-contact-name">road to MC`donalds</h4>
 							<ul class="w-users-messages">
 								<!-- agregar personas conectadas-->
+								
 							</ul>
 	  				</header>
 	  				<section class="w-chat-panel">
@@ -39,7 +40,7 @@
 									</div>
 									<div class="col-9">
 										<li class="w-write-message-item w-write-message-input">
-										<input type="text" name="w-message-input" class="w-write-message-field" placeholder="Escribe tu mensaje aquí" id="mensajes">
+										<input type="text" name="w-message-input" class="w-write-message-field" placeholder="Escribe tu mensaje aquí" id="mensaje">
 									</div>
 									<div class="col-1">
 										<li class="w-write-message-item icon-mic w-write-message-icon"></li>
@@ -55,6 +56,18 @@
 			<script>
 				const socket = io('http://localhost:8000');
 				$(document).ready(function (){
+					$('#mensaje').on('keydown', function(e){
+						if (e.keyCode == 13){
+							let msgOut = `<div class="w-message w-message-out">
+  														<div class="w-message-text">
+    														<p>${$('#mensaje').val()}</p>
+																<div class="time">${ moment().format('HH:mm')}</div>
+															</div>
+														</div>`;
+							$('#chat').append(msgOut);
+							$('#mensaje').val('');
+						}
+					})
 					socket.on('msg', function(data) {
 					
 			
