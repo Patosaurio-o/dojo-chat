@@ -1,78 +1,105 @@
 <!DOCTYPE html>
 <html lang="es">
 	<head>
-	  	<meta charset="utf-8">
-	  	<title>Whatsapp Web</title>
-	  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	  	<meta name="viewport" content="width=device-width, initial-scale=1">
-	  	<link rel="shortcut icon" href="/image/favicon.png" type="image/png">
-	  	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600%7CRoboto:300,400,500" media="all">
-	  	<script src="/js/jquery-3.5.1.min.js"></script>
-			<link href="/css/bootstrap.min.css" rel="stylesheet">
-			<Script src="/js/bootstrap.bundle.min.js"></SCript>
-	  	<link href="/css/icomoon.css" rel="stylesheet">
-	  	<link href="/css/main.css" rel="stylesheet">
-	  	<link href="/css/queries.css" rel="stylesheet">
-			<script src="/js/moment-whit-locales.min.js"></script>
+		<meta charset="utf-8">
+		<title>Whatsapp Web</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" href="/image/favicon.png" type="image/png">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600%7CRoboto:300,400,500" media="all">
+		<script src="/js/jquery-3.5.1.min.js"></script>
+		<link href="/css/bootstrap.min.css" rel="stylesheet">
+		<Script src="/js/bootstrap.bundle.min.js"></SCript>
+		<link href="/css/icomoon.css" rel="stylesheet">
+		<link href="/css/main.css" rel="stylesheet">
+		<link href="/css/queries.css" rel="stylesheet">
+		<script src="/js/moment-whit-locales.min.js"></script>
+		<link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+		<script src="/js/toastr.js"></script>
+		<link href="/css/toastr.css" rel="stylesheet"/>
 	</head>
 	<body>
 		<div class="w-app">
 			<div class="container">
 				<section class="col w-contacts w-messages">
 					<header class="w-chat-messages clearfix">
-						<div class="avatar col-9 w-chat-profile">
-							<img src="/image/download.png" alt="">
-							<h4 class="w-contact-name">road to MC`donalds</h4>
+						<div class="avatar col-8 w-chat-profile">
+							<img src="/image/download.png" alt="#">
+							<h4 class="w-contact-name line">road to MC`donalds</h4>
 							<ul class="w-users-messages">
-								<!-- agregar personas conectadas-->
-								
+								<li><%=user.name%></li>
 							</ul>
-	  				</header>
-	  				<section class="w-chat-panel">
-	  					<div class="w-message-list clearfix" id="chat">
-	  					</div>
-	  				</section>
-	  				<footer class="pane-footer w-write-message-footer">
-	  					<ul class="w-write-message-list clearfix">
-								<div class="row">
-									<div class="col-1">
-										<li class="w-write-message-item icon-insert_emoticon w-write-message-icon"></li>
-									</div>
-									<div class="col-9">
-										<li class="w-write-message-item w-write-message-input">
-										<input type="text" name="w-message-input" class="w-write-message-field" placeholder="Escribe tu mensaje aquí" id="mensaje">
-									</div>
-									<div class="col-1">
-										<li class="w-write-message-item icon-mic w-write-message-icon"></li>
-									</div>
+							<div class="w-chat-controls col-3">
+								<div class="pa-fuera">
+									<a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>logout</a>
 								</div>
-	  						</li>
-	  					</ul>
-	  				</footer>
-	  			</section>
-	  		</div>
-	  	</div>
-			<script type ="text/javascript" src="/socket.io/socket.io.js"></script>
-			<script>
-				const socket = io('http://localhost:8000');
-				$(document).ready(function (){
-					$('#mensaje').on('keydown', function(e){
-						if (e.keyCode == 13){
-							let msgOut = `<div class="w-message w-message-out">
-  														<div class="w-message-text">
-    														<p>${$('#mensaje').val()}</p>
-																<div class="time">${ moment().format('HH:mm')}</div>
-															</div>
-														</div>`;
-							$('#chat').append(msgOut);
-							$('#mensaje').val('');
-						}
-					})
-					socket.on('msg', function(data) {
-					
-			
-					});
+							</div>
+						</div>
+					</header>
+					<section class="w-chat-panel">
+						<div class="w-message-list clearfix" id="chat">
+						</div>
+					</section>
+					<footer class="pane-footer w-write-message-footer">
+						<ul class="w-write-message-list clearfix">
+							<div class="row">
+								<div class="col-1">
+									<li class="w-write-message-item icon-insert_emoticon w-write-message-icon"></li>
+								</div>
+								<div class="col-9">
+									<li class="w-write-message-item w-write-message-input">
+									<input type="text" name="w-message-input" class="w-write-message-field" placeholder="Escribe tu mensaje aquí" id="mensaje">
+								</div>
+								<div class="col-1">
+									<li class="w-write-message-item icon-mic w-write-message-icon"></li>
+								</div>
+							</div>
+							</li>
+						</ul>
+					</footer>
+				</section>
+			</div>
+		</div>
+		<script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+		<script>
+			const socket = io('http://localhost:8000');
+			$(document).ready(function (){		
+				$('#mensaje').on('keydown', function(e){
+					let datos = {
+						time: moment().format('HH:mm'),
+						inputMsg: $('#mensaje').val(),
+						name: '<%=user.name%>'
+					}
+					if (e.keyCode == 13){
+						let msgOut = `<div class="w-message w-message-out">
+														<div class="w-message-text">
+															<h4></h4>
+															<p>${datos.inputMsg}</p>
+															<div class="time">${datos.time}</div>
+														</div>
+													</div>`;
+						$('#chat').append(msgOut);
+						$('#mensaje').val('');
+						socket.emit('msgSend', datos);	
+					}
+				})
+				socket.on('msg', function(datos){
+					let msgIn = `<div class="w-message w-message-in">
+												<div class="w-message-text">
+													<h5 class="blue-1">${datos.name}</h5>
+													<p>${datos.inputMsg}</p>
+													<div class="time">${datos.time}</div>
+												</div>
+											</div>`;
+					$('#chat').append(msgIn);
 				});
-			</script>
+				let data = '<%=user.name%>';
+     	 	socket.emit('userLogin', data);
+      	socket.on('userChat', function(data){
+					toastr.info(`${data} ha ingresado a la sala de Chat`);
+					console.log(user.name)
+      	});
+    	});
+		</script>
 	</body>
 </html>

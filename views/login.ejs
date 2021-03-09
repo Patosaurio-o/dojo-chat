@@ -51,7 +51,20 @@
         "hideMethod": "fadeOut"
       }
     </script>
-    <script>
+    <script>        
+      $(document).ready(function(){
+        <% for(var error of errors) { %>
+          toastr.error('<%=error%>'); 
+        <% } %>
+      $('#form-register').on('submit', function(){
+        const pass1 = $('#password').val();
+        const pass2 = $('#password_confirm').val();
+          if (pass1 != pass2){
+            toastr.error('las contraseñas deben ser iguales');
+            return false;
+          }
+        });  
+      });
       $('#btn-login').on('click', function(){
       $('#div-form').html(
         `<form id="form-login" action="/login" method="POST" class="col-4 offset-md-4 mt-4">
@@ -112,19 +125,7 @@
           </form>`
           )
         }); 
-      $(document).ready(function(){
-        <% for(var error of errors) { %>
-          toastr.error('<%=error%>'); 
-        <% } %>
-        $('#form-register').on('submit', function(){
-          const pass1 = $('#password').val();
-          const pass2 = $('#password_confirm').val();
-          if (pass1 != pass2){
-            toastr.error('las contraseñas deben ser iguales');
-            return false;
-          }
-        });  
-      });
+
     </script>
   </body>
 </html>
